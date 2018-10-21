@@ -1,0 +1,13 @@
+@(unko: String, form1: Form[SampleForm])
+
+@main("Welcome to Play") {
+  <h1>Welcome to Play!</h1>
+  @unko
+  @helper.form(action = routes.HomeController.send){
+    @helper.CSRF.formField
+    @(helper.inputText(
+      field = form1("message")
+    ))
+    <input type="submit">
+  }
+}
