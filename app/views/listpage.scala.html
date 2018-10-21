@@ -1,5 +1,16 @@
-@(datas: List[Message])
+@(datas: io.ebean.PagedList[Message])
 
 @main("Welcome to Play") {
-<pre>@datas</pre>
+    <pre>@datas</pre>
+    <p>@(datas.getTotalCount)件</p>
+
+@* https://github.com/playframework/play-java-ebean-example/blob/2.6.x/app/views/list.scala.html *@
+
+    @if(datas.getTotalCount == 0){
+        <em>Nothing to display</em>
+    }else{
+        @for(message <- datas.getList.asScala){
+            <p>@message</p>
+        }
+    }
 }

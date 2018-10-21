@@ -56,9 +56,15 @@ public class HomeController extends Controller {
     }
 
     public CompletionStage<Result> list(){
-        return CompletableFuture.supplyAsync(() -> ebeanServer.find(Message.class).orderBy("id").findList())
+        int page = 0;
+        int pagesize = 5;
+
+        // https://github.com/playframework/play-java-ebean-example/blob/2.6.x/app/controllers/HomeController.java
+        return CompletableFuture.supplyAsync(() -> ebeanServer.find(Message.class).orderBy("id")
+                .setFirstRow(page * pagesize).setMaxRows(pagesize).findPagedList())
                 .thenApply(list -> {
-                    for(Message m : list){
+
+                    for(Message m : list.getList()){
                         System.out.println(m.id);
                     }
                     return ok(listpage.render(list));
