@@ -1,0 +1,19 @@
+@(msg: String, form1: Form[models.Message])
+
+@main("Welcome to Play") {
+<h1>Hi!</h1>
+<p>@msg</p>
+@helper.form(action = routes.HomeController.create){
+    @helper.CSRF.formField
+    @(helper.inputText(
+        field = form1("name")
+    ))
+    @(helper.inputText(
+        field = form1("mail")
+    ))
+    @(helper.textarea(
+        field = form1("message")
+    ))
+    <input type="submit">
+    }
+}
